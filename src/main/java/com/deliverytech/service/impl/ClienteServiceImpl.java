@@ -46,4 +46,12 @@ public class ClienteServiceImpl implements ClienteService {
             clienteRepository.save(c);
         });
     }
+ private void simulateDelay() {
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
 }
