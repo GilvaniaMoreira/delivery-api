@@ -10,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,12 +43,20 @@ public class ClienteController {
     }
 
     @GetMapping
-    public List<ClienteResponse> listar() {
-        logger.info("Listando todos os clientes ativos");
+    public Page<ClienteResponse> listar(Pageable pageable) {
+        logger.info("Listando todos os clientes ativos de forma paginada");
+        return clienteService.listarAtivos(pageable).map(c -> new ClienteResponse(c.getId(), c.getNome(), c.getEmail(), c.getAtivo()));
+    }
+
+    /*@GetMapping("/clientes") // Mapeia a URL http://localhost:8080/clientes
+    public List<ClienteResponse> listarClientesNoEndpointSimples() {
+        logger.info("Acessando o endpoint simplificado /clientes");
+ 
         return clienteService.listarAtivos().stream()
                 .map(c -> new ClienteResponse(c.getId(), c.getNome(), c.getEmail(), c.getAtivo()))
                 .collect(Collectors.toList());
-    }
+    }*/
+ 
 
     @GetMapping("/{id}")
     public ResponseEntity<ClienteResponse> buscar(@PathVariable Long id) {

@@ -7,6 +7,8 @@ import com.deliverytech.service.RestauranteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import jakarta.validation.Valid;
 import java.util.List;
@@ -36,10 +38,8 @@ public class RestauranteController {
     }
 
     @GetMapping
-    public List<RestauranteResponse> listarTodos() {
-        return restauranteService.listarTodos().stream()
-                .map(r -> new RestauranteResponse(r.getId(), r.getNome(), r.getCategoria(), r.getTelefone(), r.getTaxaEntrega(), r.getTempoEntregaMinutos(), r.getAtivo()))
-                .collect(Collectors.toList());
+    public Page<RestauranteResponse> listarTodos(Pageable pageable) {
+        return restauranteService.listarTodos(pageable).map(r -> new RestauranteResponse(r.getId(), r.getNome(), r.getCategoria(), r.getTelefone(), r.getTaxaEntrega(), r.getTempoEntregaMinutos(), r.getAtivo()));
     }
 
     @GetMapping("/{id}")
