@@ -1,6 +1,7 @@
 package com.deliverytech.dto.request;
 
 import com.deliverytech.model.Endereco;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -18,6 +19,7 @@ public class PedidoRequest {
     private Long restauranteId;
 
     @NotNull
+    @Valid
     private Endereco enderecoEntrega;
 
     @NotNull

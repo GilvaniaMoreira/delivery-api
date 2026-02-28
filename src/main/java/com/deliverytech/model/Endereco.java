@@ -1,5 +1,6 @@
 package com.deliverytech.model;
 
+import com.deliverytech.validation.ValidCEP;
 import jakarta.persistence.Embeddable;
 import lombok.*;
 
@@ -15,5 +16,7 @@ public class Endereco {
     private String bairro;
     private String cidade;
     private String estado;
+
+    @ValidCEP
     private String cep;
 }

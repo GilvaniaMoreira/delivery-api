@@ -1,5 +1,6 @@
 package com.deliverytech.dto.request;
 
+import com.deliverytech.validation.ValidTelefone;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
@@ -17,6 +18,7 @@ public class RestauranteRequest {
     private String categoria;
 
     @NotBlank
+    @ValidTelefone
     private String telefone;
 
     @DecimalMin("0.0")
