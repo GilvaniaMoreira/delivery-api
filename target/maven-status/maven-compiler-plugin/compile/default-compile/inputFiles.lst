@@ -15,6 +15,7 @@ C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\c
 C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\exception\BusinessException.java
 C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\dto\request\ClienteRequest.java
 C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\controller\ProdutoController.java
+C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\dto\response\ErrorResponse.java
 C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\service\ClienteService.java
 C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\security\JwtAuthenticationFilter.java
 C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\dto\response\ProdutoResponse.java
