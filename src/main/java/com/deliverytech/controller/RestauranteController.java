@@ -5,6 +5,8 @@ import com.deliverytech.dto.response.RestauranteResponse;
 import com.deliverytech.model.Restaurante;
 import com.deliverytech.service.RestauranteService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
@@ -19,10 +21,12 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class RestauranteController {
 
+    private static final Logger logger = LoggerFactory.getLogger(RestauranteController.class);
     private final RestauranteService restauranteService;
 
     @PostMapping
     public ResponseEntity<RestauranteResponse> cadastrar(@Valid @RequestBody RestauranteRequest request) {
+        logger.info("Cadastrando restaurante: {}", request.getNome());
         Restaurante restaurante = Restaurante.builder()
                 .nome(request.getNome())
                 .telefone(request.getTelefone())
@@ -39,13 +43,17 @@ public class RestauranteController {
 
     @GetMapping
     public Page<RestauranteResponse> listarTodos(Pageable pageable) {
-        return restauranteService.listarTodos(pageable).map(r -> new RestauranteResponse(r.getId(), r.getNome(), r.getCategoria(), r.getTelefone(), r.getTaxaEntrega(), r.getTempoEntregaMinutos(), r.getAtivo()));
+        logger.info("Listando restaurantes - página: {}", pageable.getPageNumber());
+        return restauranteService.listarTodos(pageable).map(r -> new RestauranteResponse(r.getId(), r.getNome(),
+                r.getCategoria(), r.getTelefone(), r.getTaxaEntrega(), r.getTempoEntregaMinutos(), r.getAtivo()));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<RestauranteResponse> buscarPorId(@PathVariable Long id) {
+        logger.info("Buscando restaurante ID: {}", id);
         return restauranteService.buscarPorId(id)
-                .map(r -> new RestauranteResponse(r.getId(), r.getNome(), r.getCategoria(), r.getTelefone(), r.getTaxaEntrega(), r.getTempoEntregaMinutos(), r.getAtivo()))
+                .map(r -> new RestauranteResponse(r.getId(), r.getNome(), r.getCategoria(), r.getTelefone(),
+                        r.getTaxaEntrega(), r.getTempoEntregaMinutos(), r.getAtivo()))
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -53,12 +61,15 @@ public class RestauranteController {
     @GetMapping("/categoria/{categoria}")
     public List<RestauranteResponse> buscarPorCategoria(@PathVariable String categoria) {
         return restauranteService.buscarPorCategoria(categoria).stream()
-                .map(r -> new RestauranteResponse(r.getId(), r.getNome(), r.getCategoria(), r.getTelefone(), r.getTaxaEntrega(), r.getTempoEntregaMinutos(), r.getAtivo()))
+                .map(r -> new RestauranteResponse(r.getId(), r.getNome(), r.getCategoria(), r.getTelefone(),
+                        r.getTaxaEntrega(), r.getTempoEntregaMinutos(), r.getAtivo()))
                 .collect(Collectors.toList());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RestauranteResponse> atualizar(@PathVariable Long id, @Valid @RequestBody RestauranteRequest request) {
+    public ResponseEntity<RestauranteResponse> atualizar(@PathVariable Long id,
+            @Valid @RequestBody RestauranteRequest request) {
+        logger.info("Atualizando restaurante ID: {}", id);
         Restaurante atualizado = Restaurante.builder()
                 .nome(request.getNome())
                 .telefone(request.getTelefone())
@@ -67,6 +78,7 @@ public class RestauranteController {
                 .tempoEntregaMinutos(request.getTempoEntregaMinutos())
                 .build();
         Restaurante salvo = restauranteService.atualizar(id, atualizado);
-        return ResponseEntity.ok(new RestauranteResponse(salvo.getId(), salvo.getNome(), salvo.getCategoria(), salvo.getTelefone(), salvo.getTaxaEntrega(), salvo.getTempoEntregaMinutos(), salvo.getAtivo()));
+        return ResponseEntity.ok(new RestauranteResponse(salvo.getId(), salvo.getNome(), salvo.getCategoria(),
+                salvo.getTelefone(), salvo.getTaxaEntrega(), salvo.getTempoEntregaMinutos(), salvo.getAtivo()));
     }
 }

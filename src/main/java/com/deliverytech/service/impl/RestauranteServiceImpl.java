@@ -4,6 +4,8 @@ import com.deliverytech.model.Restaurante;
 import com.deliverytech.repository.RestauranteRepository;
 import com.deliverytech.service.RestauranteService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -18,10 +20,12 @@ import java.util.Optional;
 public class RestauranteServiceImpl implements RestauranteService {
 
     private final RestauranteRepository restauranteRepository;
+    private static final Logger logger = LoggerFactory.getLogger(RestauranteServiceImpl.class);
 
     @Override
     @CacheEvict(value = "restaurantes", allEntries = true)
     public Restaurante cadastrar(Restaurante restaurante) {
+        logger.info("Salvando restaurante: {}", restaurante.getNome());
         return restauranteRepository.save(restaurante);
     }
 
@@ -53,6 +57,9 @@ public class RestauranteServiceImpl implements RestauranteService {
                     r.setTaxaEntrega(atualizado.getTaxaEntrega());
                     r.setTempoEntregaMinutos(atualizado.getTempoEntregaMinutos());
                     return restauranteRepository.save(r);
-                }).orElseThrow(() -> new RuntimeException("Restaurante não encontrado"));
+                }).orElseThrow(() -> {
+                    logger.error("Restaurante não encontrado para atualização, ID: {}", id);
+                    return new RuntimeException("Restaurante não encontrado");
+                });
     }
 }

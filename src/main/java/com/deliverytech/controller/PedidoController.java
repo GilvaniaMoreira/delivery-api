@@ -10,6 +10,8 @@ import com.deliverytech.service.PedidoService;
 import com.deliverytech.service.ProdutoService;
 import com.deliverytech.service.RestauranteService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,55 +25,58 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PedidoController {
 
-    private final PedidoService pedidoService;
-    private final ClienteService clienteService;
-    private final RestauranteService restauranteService;
-    private final ProdutoService produtoService;
+        private static final Logger logger = LoggerFactory.getLogger(PedidoController.class);
+        private final PedidoService pedidoService;
+        private final ClienteService clienteService;
+        private final RestauranteService restauranteService;
+        private final ProdutoService produtoService;
 
-    @PostMapping
-    public ResponseEntity<PedidoResponse> criar(@Valid @RequestBody PedidoRequest request) {
-        Cliente cliente = clienteService.buscarPorId(request.getClienteId())
-                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
-        Restaurante restaurante = restauranteService.buscarPorId(request.getRestauranteId())
-                .orElseThrow(() -> new RuntimeException("Restaurante não encontrado"));
+        @PostMapping
+        public ResponseEntity<PedidoResponse> criar(@Valid @RequestBody PedidoRequest request) {
+                logger.info("Criando pedido - cliente ID: {}, restaurante ID: {}", request.getClienteId(),
+                                request.getRestauranteId());
+                Cliente cliente = clienteService.buscarPorId(request.getClienteId())
+                                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+                Restaurante restaurante = restauranteService.buscarPorId(request.getRestauranteId())
+                                .orElseThrow(() -> new RuntimeException("Restaurante não encontrado"));
 
-        List<ItemPedido> itens = request.getItens().stream().map(item -> {
-            Produto produto = produtoService.buscarPorId(item.getProdutoId())
-                    .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
-            return ItemPedido.builder()
-                    .produto(produto)
-                    .quantidade(item.getQuantidade())
-                    .precoUnitario(produto.getPreco())
-                    .build();
-        }).collect(Collectors.toList());
+                List<ItemPedido> itens = request.getItens().stream().map(item -> {
+                        Produto produto = produtoService.buscarPorId(item.getProdutoId())
+                                        .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+                        return ItemPedido.builder()
+                                        .produto(produto)
+                                        .quantidade(item.getQuantidade())
+                                        .precoUnitario(produto.getPreco())
+                                        .build();
+                }).collect(Collectors.toList());
 
-        BigDecimal total = itens.stream()
-                .map(i -> i.getPrecoUnitario().multiply(BigDecimal.valueOf(i.getQuantidade())))
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+                BigDecimal total = itens.stream()
+                                .map(i -> i.getPrecoUnitario().multiply(BigDecimal.valueOf(i.getQuantidade())))
+                                .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        Pedido pedido = Pedido.builder()
-                .cliente(cliente)
-                .restaurante(restaurante)
-                .status(StatusPedido.CRIADO)
-                .total(total)
-                .enderecoEntrega(request.getEnderecoEntrega())
-                .itens(itens)
-                .build();
+                Pedido pedido = Pedido.builder()
+                                .cliente(cliente)
+                                .restaurante(restaurante)
+                                .status(StatusPedido.CRIADO)
+                                .total(total)
+                                .enderecoEntrega(request.getEnderecoEntrega())
+                                .itens(itens)
+                                .build();
 
-        Pedido salvo = pedidoService.criar(pedido);
-        List<ItemPedidoResponse> itensResp = salvo.getItens().stream()
-                .map(i -> new ItemPedidoResponse(i.getProduto().getId(), i.getProduto().getNome(), i.getQuantidade(), i.getPrecoUnitario()))
-                .collect(Collectors.toList());
+                Pedido salvo = pedidoService.criar(pedido);
+                List<ItemPedidoResponse> itensResp = salvo.getItens().stream()
+                                .map(i -> new ItemPedidoResponse(i.getProduto().getId(), i.getProduto().getNome(),
+                                                i.getQuantidade(), i.getPrecoUnitario()))
+                                .collect(Collectors.toList());
 
-        return ResponseEntity.ok(new PedidoResponse(
-                salvo.getId(),
-                cliente.getId(),
-                restaurante.getId(),
-                salvo.getEnderecoEntrega(),
-                salvo.getTotal(),
-                salvo.getStatus(),
-                salvo.getDataPedido(),
-                itensResp
-        ));
-    }
+                return ResponseEntity.ok(new PedidoResponse(
+                                salvo.getId(),
+                                cliente.getId(),
+                                restaurante.getId(),
+                                salvo.getEnderecoEntrega(),
+                                salvo.getTotal(),
+                                salvo.getStatus(),
+                                salvo.getDataPedido(),
+                                itensResp));
+        }
 }

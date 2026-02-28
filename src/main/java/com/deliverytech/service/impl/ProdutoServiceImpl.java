@@ -4,6 +4,8 @@ import com.deliverytech.model.Produto;
 import com.deliverytech.repository.ProdutoRepository;
 import com.deliverytech.service.ProdutoService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -16,10 +18,12 @@ import java.util.Optional;
 public class ProdutoServiceImpl implements ProdutoService {
 
     private final ProdutoRepository produtoRepository;
+    private static final Logger logger = LoggerFactory.getLogger(ProdutoServiceImpl.class);
 
     @Override
     @CacheEvict(value = "produtos", allEntries = true)
     public Produto cadastrar(Produto produto) {
+        logger.info("Cadastrando produto: {}", produto.getNome());
         return produtoRepository.save(produto);
     }
 
@@ -44,7 +48,10 @@ public class ProdutoServiceImpl implements ProdutoService {
                     p.setCategoria(atualizado.getCategoria());
                     p.setPreco(atualizado.getPreco());
                     return produtoRepository.save(p);
-                }).orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+                }).orElseThrow(() -> {
+                    logger.error("Produto não encontrado para atualização, ID: {}", id);
+                    return new RuntimeException("Produto não encontrado");
+                });
     }
 
     @Override
