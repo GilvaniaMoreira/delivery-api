@@ -7,6 +7,8 @@ C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\c
 C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\service\PedidoService.java
 C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\service\RestauranteService.java
 C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\controller\RestauranteController.java
+C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\config\RestTemplateConfig.java
+C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\dto\response\ViaCepResponse.java
 C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\DeliveryTechApiApplication.java
 C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\dto\response\PedidoResponse.java
 C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\dto\request\RegisterRequest.java
@@ -48,6 +50,7 @@ C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\c
 C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\dto\request\LoginRequest.java
 C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\dto\request\ItemPedidoRequest.java
 C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\service\impl\PedidoServiceImpl.java
+C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\service\ViaCepService.java
 C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\model\StatusPedido.java
 C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\model\Endereco.java
 C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\exception\EntityNotFoundException.java
