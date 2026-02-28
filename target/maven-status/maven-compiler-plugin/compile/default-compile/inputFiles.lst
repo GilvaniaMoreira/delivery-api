@@ -1,6 +1,7 @@
 C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\controller\AuthController.java
 C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\controller\ClienteController.java
 C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\service\impl\ProdutoServiceImpl.java
+C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\exception\ConflictException.java
 C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\model\ItemPedido.java
 C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\model\Produto.java
 C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\dto\request\PedidoRequest.java
@@ -25,6 +26,7 @@ C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\c
 C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\dto\response\RestauranteResponse.java
 C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\security\JwtUtil.java
 C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\model\Usuario.java
+C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\exception\BusinessException.java
 C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\security\UsuarioDetailsServiceImpl.java
 C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\dto\request\ClienteRequest.java
 C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\controller\ProdutoController.java
@@ -41,5 +43,6 @@ C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\c
 C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\repository\PedidoRepository.java
 C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\model\Endereco.java
 C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\dto\response\ClienteResponse.java
+C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\exception\EntityNotFoundException.java
 C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\model\Restaurante.java
 C:\Users\morei\Documents\ArquiteturaDeSistemas\Projects\delivery\src\main\java\com\deliverytech\service\impl\RestauranteServiceImpl.java
