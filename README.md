@@ -345,6 +345,5 @@ delivery/
 
 ---
 
-## 📬 Contato
 
 Projeto desenvolvido como parte do curso de **Arquitetura de Sistemas**.
