@@ -2,6 +2,7 @@ package com.deliverytech.controller;
 
 import com.deliverytech.dto.request.ItemPedidoRequest;
 import com.deliverytech.dto.request.PedidoRequest;
+import com.deliverytech.dto.response.ErrorResponse;
 import com.deliverytech.dto.response.ItemPedidoResponse;
 import com.deliverytech.dto.response.PedidoResponse;
 import com.deliverytech.model.*;
@@ -9,6 +10,12 @@ import com.deliverytech.service.ClienteService;
 import com.deliverytech.service.PedidoService;
 import com.deliverytech.service.ProdutoService;
 import com.deliverytech.service.RestauranteService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +30,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/pedidos")
 @RequiredArgsConstructor
+@Tag(name = "Pedidos", description = "Criação e gerenciamento de pedidos de delivery")
 public class PedidoController {
 
         private static final Logger logger = LoggerFactory.getLogger(PedidoController.class);
@@ -31,6 +39,12 @@ public class PedidoController {
         private final RestauranteService restauranteService;
         private final ProdutoService produtoService;
 
+        @Operation(summary = "Criar pedido", description = "Cria um novo pedido com itens, vinculado a um cliente e restaurante. O total é calculado automaticamente.")
+        @ApiResponses({
+                        @ApiResponse(responseCode = "200", description = "Pedido criado com sucesso", content = @Content(schema = @Schema(implementation = PedidoResponse.class))),
+                        @ApiResponse(responseCode = "400", description = "Dados inválidos na requisição", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                        @ApiResponse(responseCode = "500", description = "Cliente, restaurante ou produto não encontrado")
+        })
         @PostMapping
         public ResponseEntity<PedidoResponse> criar(@Valid @RequestBody PedidoRequest request) {
                 logger.info("Criando pedido - cliente ID: {}, restaurante ID: {}", request.getClienteId(),
